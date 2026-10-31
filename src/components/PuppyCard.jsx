@@ -1,3 +1,4 @@
+import { assetUrl } from '../data/puppiesData';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Play, MessageCircle, Heart, Sparkles } from 'lucide-react';
@@ -22,7 +23,7 @@ export default function PuppyCard({ puppy, onPlayVideo }) {
             loading="lazy"
             onError={(e) => {
               // fallback if specific image fails
-              e.target.src = '/brand/logo.png';
+              e.target.src = assetUrl('/brand/logo.png');
               e.target.className = 'w-full h-full object-contain p-12 opacity-50';
             }}
           />

@@ -1,3 +1,4 @@
+import { assetUrl } from '../data/puppiesData';
 import React from 'react';
 
 export default function PolaroidCard({ item, onClick, rotate = 0 }) {
@@ -18,7 +19,7 @@ export default function PolaroidCard({ item, onClick, rotate = 0 }) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
           onError={(e) => {
-            e.target.src = '/brand/logo.png';
+            e.target.src = assetUrl('/brand/logo.png');
             e.target.className = 'w-full h-full object-contain p-8 opacity-40';
           }}
         />

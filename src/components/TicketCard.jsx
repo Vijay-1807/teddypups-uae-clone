@@ -1,3 +1,4 @@
+import { assetUrl } from '../data/puppiesData';
 import React from 'react';
 import { Heart, CheckCircle2 } from 'lucide-react';
 
@@ -27,7 +28,7 @@ export default function TicketCard({ puppy }) {
             className="w-full h-full object-cover"
             loading="lazy"
             onError={(e) => {
-              e.target.src = '/brand/logo.png';
+              e.target.src = assetUrl('/brand/logo.png');
               e.target.className = 'w-full h-full object-contain p-4 opacity-50';
             }}
           />

@@ -1,3 +1,4 @@
+import { assetUrl } from '../data/puppiesData';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Mail, MapPin } from 'lucide-react';
@@ -16,7 +17,7 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <img
-                  src="/brand/logo.png"
+                  src={assetUrl("/brand/logo.png")}
                   alt="TeddyPups U.A.E."
                   className="w-10 h-10 object-contain invert brightness-200"
                   onError={(e) => {

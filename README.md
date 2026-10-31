@@ -1,6 +1,6 @@
 # 🐾 TeddyPups U.A.E. — 1:1 Pixel-Perfect Clone
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-TeddyPups%20Clone-25D366?style=for-the-badge&logo=vercel)](https://teddypups-uae.netlify.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-TeddyPups%20Clone-25D366?style=for-the-badge&logo=vercel)](https://vijay-1807.github.io/teddypups-uae-clone/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-24130b?style=for-the-badge&logo=github)](https://github.com/Vijay-1807/teddypups-uae-clone)
 
 A complete, high-fidelity 1:1 clone of the reference website **[TeddyPups U.A.E.](https://puppy.instabizweb.com/)**, matching its unique editorial storybook aesthetic, scrapbook elements, interactive widgets, typography, mobile responsiveness, and client-side adoption workflow.
@@ -13,7 +13,7 @@ Built for the **Insta Biz Web Technical Assessment** by **Bontha Vijay**.
 
 | Deliverable | URL / Resource |
 | :--- | :--- |
-| **Live Website** | [https://teddypups-uae.netlify.app](https://teddypups-uae.netlify.app) |
+| **Live Website** | [https://vijay-1807.github.io/teddypups-uae-clone/](https://vijay-1807.github.io/teddypups-uae-clone/) |
 | **GitHub Repository** | [https://github.com/Vijay-1807/teddypups-uae-clone](https://github.com/Vijay-1807/teddypups-uae-clone) |
 | **Reference Website** | [https://puppy.instabizweb.com/](https://puppy.instabizweb.com/) |
 

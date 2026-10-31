@@ -1,3 +1,4 @@
+import { assetUrl } from '../data/puppiesData';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MessageCircle, Menu, X, Phone } from 'lucide-react';
@@ -45,7 +46,7 @@ export default function Header() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
               <img
-                src="/brand/logo.png"
+                src={assetUrl("/brand/logo.png")}
                 alt="TeddyPups Logo"
                 className="w-9 h-9 object-contain transition-transform group-hover:scale-105"
                 onError={(e) => {

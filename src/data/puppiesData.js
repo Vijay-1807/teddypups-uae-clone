@@ -1,3 +1,13 @@
+export const assetUrl = (path) => {
+  if (!path) return '';
+  if (typeof path !== 'string') return path;
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
+  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || '/';
+  const cleanBase = base.endsWith('/') ? base : base + '/';
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return cleanBase + cleanPath;
+};
+
 // TeddyPups U.A.E. Complete Data Model
 
 export const siteMeta = {
@@ -17,7 +27,7 @@ export const siteMeta = {
   }
 };
 
-export const availablePuppies = [
+const rawAvailablePuppies = [
   {
     id: "4218427a-dd65-4b09-a089-584b912aa7ab",
     slug: "maltipoo-max-male",
@@ -443,7 +453,7 @@ export const availablePuppies = [
   }
 ];
 
-export const goneHomePuppies = [
+const rawGoneHomePuppies = [
   { slug: "pomeranian-ace-boy", name: "Ace", breed: "Pomeranian", gender: "Boy", ticketText: "TeddyPups home", image: "/media/mihUKGFCatU3/0461cca56e/27b888_ba24634f199742a78f44ce4a2d8299eb-mv2.avif" },
   { slug: "poodle-leo-male", name: "Leo", breed: "Poodle", gender: "Boy", ticketText: "TeddyPups home", image: "/media/QgFG5s09n-ss/81af626d2d/27b888_5ff33d0684f1412b8d0092c17fb117b4-mv2.avif" },
   { slug: "maltipoo-mia-girl", name: "Mia", breed: "Maltipoo", gender: "Girl", ticketText: "Dubai showroom", image: "/media/4vu6_PGfL64H/537c367d85/27b888_747a4667fec640c69aad9bc045d61ac6-mv2.avif" },
@@ -492,7 +502,7 @@ export const happyFamiliesReviews = [
   }
 ];
 
-export const polaroidMemories = [
+const rawPolaroidMemories = [
   { img: "/media/TUslu26Ueaq-/9c3516c040/edb2f5_6627857aca7e495ea37d9f62d814d323-mv2.jpeg", caption: "first day home ❤️" },
   { img: "/media/OcgEePeBmGuu/41fb22320b/edb2f5_adf88f7400c848249d60698fca0336e9-mv2.jpeg", caption: "snuggle time" },
   { img: "/media/RYkyuv4DBCTC/d9e02a0dc8/edb2f5_7ed2ee1ba89b4230b52f5e3981b1b198-mv2.jpeg", caption: "Dubai sunshine ☀️" },
@@ -579,3 +589,20 @@ export const howItWorksData = {
     { title: "24/7 Post-Adoption Support", text: "Our dedicated puppy team is on WhatsApp 24/7 to guide you with feeding, crate training, vet visits, and puppy care." }
   ]
 };
+
+export const availablePuppies = rawAvailablePuppies.map(p => ({
+  ...p,
+  videoThumbnail: p.videoThumbnail ? assetUrl(p.videoThumbnail) : undefined,
+  image: assetUrl(p.image),
+  images: Array.isArray(p.images) ? p.images.map(assetUrl) : []
+}));
+
+export const goneHomePuppies = rawGoneHomePuppies.map(p => ({
+  ...p,
+  image: assetUrl(p.image)
+}));
+
+export const polaroidMemories = rawPolaroidMemories.map(p => ({
+  ...p,
+  img: assetUrl(p.img)
+}));
