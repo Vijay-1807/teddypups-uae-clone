@@ -33,3 +33,4 @@ export default function PolaroidCard({ item, onClick, rotate = 0 }) {
     </div>
   );
 }
+

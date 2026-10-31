@@ -80,3 +80,4 @@ export default function LightboxModal({ images = [], currentIndex = 0, onClose, 
     </div>
   );
 }
+

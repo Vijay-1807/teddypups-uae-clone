@@ -82,3 +82,4 @@ export default function GoneHomePage() {
     </div>
   );
 }
+

@@ -243,3 +243,4 @@ export default function PuppiesPage({ onPlayVideo }) {
     </div>
   );
 }
+

@@ -60,3 +60,4 @@ export default function TicketCard({ puppy }) {
     </div>
   );
 }
+

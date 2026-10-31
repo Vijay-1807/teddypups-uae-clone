@@ -107,3 +107,4 @@ export default function PuppyCard({ puppy, onPlayVideo }) {
     </div>
   );
 }
+

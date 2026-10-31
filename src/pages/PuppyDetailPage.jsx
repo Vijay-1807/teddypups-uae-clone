@@ -344,3 +344,4 @@ export default function PuppyDetailPage({ onPlayVideo, onOpenLightbox }) {
     </div>
   );
 }
+

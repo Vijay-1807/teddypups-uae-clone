@@ -485,3 +485,4 @@ export default function HomePage({ onPlayVideo, onOpenLightbox }) {
     </div>
   );
 }
+

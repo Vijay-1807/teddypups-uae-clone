@@ -32,3 +32,4 @@ export default function FAQItem({ faq, defaultOpen = false }) {
     </div>
   );
 }
+
