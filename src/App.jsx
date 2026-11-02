@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import MobileBottomBar from './components/MobileBottomBar';
-import MascotWidget from './components/MascotWidget';
-import VideoModal from './components/VideoModal';
-import LightboxModal from './components/LightboxModal';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -17,119 +13,53 @@ import HowItWorksPage from './pages/HowItWorksPage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 
-// Scroll to top helper
+// Scroll to top on route change
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
-
   useEffect(() => {
     if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
+      const el = document.querySelector(hash);
+      if (el) { el.scrollIntoView({ behavior: 'smooth' }); return; }
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname, hash]);
-
   return null;
 }
 
 export default function App() {
-  const [activeVideoPuppy, setActiveVideoPuppy] = useState(null);
-  const [lightboxState, setLightboxState] = useState({
-    isOpen: false,
-    images: [],
-    currentIndex: 0,
-  });
-
-  const handleOpenLightbox = (images, index = 0) => {
-    setLightboxState({
-      isOpen: true,
-      images,
-      currentIndex: index,
-    });
-  };
-
-  const handleCloseLightbox = () => {
-    setLightboxState((prev) => ({ ...prev, isOpen: false }));
-  };
-
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-[#fffdf8] text-[#2a170e] relative selection:bg-honey selection:text-cocoa">
-        {/* Navigation Header */}
-        <Header />
-
-        {/* Main Content Pages */}
-        <main id="main" className="flex-1">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  onPlayVideo={(puppy) => setActiveVideoPuppy(puppy)}
-                  onOpenLightbox={handleOpenLightbox}
-                />
-              }
-            />
-            <Route
-              path="/puppies"
-              element={
-                <PuppiesPage
-                  onPlayVideo={(puppy) => setActiveVideoPuppy(puppy)}
-                />
-              }
-            />
-            <Route
-              path="/puppies/:slug"
-              element={
-                <PuppyDetailPage
-                  onPlayVideo={(puppy) => setActiveVideoPuppy(puppy)}
-                  onOpenLightbox={handleOpenLightbox}
-                />
-              }
-            />
-            <Route path="/gone-home" element={<GoneHomePage />} />
-            <Route
-              path="/happy-families"
-              element={<HappyFamiliesPage onOpenLightbox={handleOpenLightbox} />}
-            />
-            <Route path="/how-it-works" element={<HowItWorksPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
-
-        {/* Global Footer */}
-        <Footer />
-
-        {/* Sticky Mobile Actions Bar */}
-        <MobileBottomBar />
-
-        {/* Interactive Mascot Pet Doggy */}
-        <MascotWidget />
-
-        {/* Video Clip Modal */}
-        {activeVideoPuppy && (
-          <VideoModal
-            puppy={activeVideoPuppy}
-            onClose={() => setActiveVideoPuppy(null)}
-          />
-        )}
-
-        {/* Lightbox Photo Gallery Modal */}
-        {lightboxState.isOpen && (
-          <LightboxModal
-            images={lightboxState.images}
-            currentIndex={lightboxState.currentIndex}
-            onClose={handleCloseLightbox}
-            onNavigate={(newIdx) =>
-              setLightboxState((prev) => ({ ...prev, currentIndex: newIdx }))
-            }
-          />
-        )}
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/puppies" element={<PuppiesPage />} />
+        <Route path="/puppies/:slug" element={<PuppyDetailPage />} />
+        <Route path="/gone-home" element={<GoneHomePage />} />
+        <Route path="/happy-families" element={<HappyFamiliesPage />} />
+        <Route path="/how-it-works" element={<HowItWorksPage />} />
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+      <Footer />
+      {/* Mobile Sticky WhatsApp / Call Bar */}
+      <div data-whatsapp-bar="true" className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-cocoa bg-milk px-3 pb-[calc(0.6rem+env(safe-area-inset-bottom))] pt-2.5 md:hidden">
+        <div className="mx-auto flex max-w-md gap-2">
+          <a
+            href="https://wa.me/971541676733?text=Hi%20TeddyPups!%20I'd%20love%20to%20know%20more%20about%20your%20puppies."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-whatsapp !min-h-12 flex-1 !shadow-none"
+          >
+            WhatsApp us
+          </a>
+          <a
+            href="tel:+971541676733"
+            className="btn btn-ghost !min-h-12 !px-5"
+          >
+            Call
+          </a>
+        </div>
       </div>
     </Router>
   );

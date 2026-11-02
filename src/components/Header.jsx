@@ -1,182 +1,27 @@
-import { assetUrl } from '../data/puppiesData';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MessageCircle, Menu, X, Phone } from 'lucide-react';
-import { siteMeta } from '../data/puppiesData';
+import { assetUrl } from '../data/puppiesData';
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
+  const isHome = location.pathname === '/';
 
-  // Track scroll for subtle border / elevation
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Puppies', path: '/puppies' },
-    { name: 'Happy families', path: '/happy-families' },
-    { name: 'How it works', path: '/how-it-works' },
-    { name: 'FAQ', path: '/faq' },
-    { name: 'Visit & contact', path: '/contact' },
-  ];
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#fffdf8]/95 backdrop-blur-md shadow-sm border-b border-cocoa/10 py-3'
-            : 'bg-[#fffdf8]/85 backdrop-blur-sm py-4 border-b border-cocoa/5'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <img
-                src={assetUrl("/brand/logo.png")}
-                alt="TeddyPups Logo"
-                className="w-9 h-9 object-contain transition-transform group-hover:scale-105"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-              <div className="flex flex-col">
-                <span className="font-serif text-2xl font-bold tracking-tight text-cocoa leading-none group-hover:text-toffee transition-colors">
-                  TeddyPups
-                </span>
-                <span className="font-scrawl text-xs text-toffee font-medium tracking-wide">
-                  every puppy is family
-                </span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`px-3.5 py-1.5 rounded-full text-[0.95rem] font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-cocoa text-milk font-semibold shadow-sm'
-                        : 'text-cocoa/85 hover:text-cocoa hover:bg-cocoa/5'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* Right Action: WhatsApp CTA */}
-            <div className="hidden sm:flex items-center gap-3">
-              <a
-                href={siteMeta.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp text-sm font-semibold !py-2 !px-4"
-              >
-                <MessageCircle className="w-4 h-4 fill-white text-white" />
-                <span>WhatsApp us</span>
-              </a>
-            </div>
-
-            {/* Mobile Hamburger Button */}
-            <div className="flex items-center gap-2 lg:hidden">
-              <a
-                href={siteMeta.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp text-xs !py-1.5 !px-3 sm:hidden"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-white text-white" />
-                <span>WhatsApp</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="inline-flex h-10 items-center gap-1.5 rounded-full border-2 border-cocoa bg-milk px-3.5 text-sm font-semibold text-cocoa hover:bg-cocoa hover:text-milk transition-colors"
-                aria-label="Toggle navigation menu"
-              >
-                {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-                <span>{mobileMenuOpen ? 'Close' : 'Menu'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Slide-down Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-cocoa/40 backdrop-blur-sm transition-opacity"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-
-          {/* Menu Drawer */}
-          <div className="fixed inset-x-0 top-16 bg-[#fffdf8] border-b border-cocoa/15 shadow-2xl p-6 rounded-b-3xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-top-4 duration-300">
-            <div className="flex flex-col gap-2">
-              <p className="font-scrawl text-sm text-toffee mb-1">where to, friend?</p>
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-lg font-medium transition-colors ${
-                      isActive
-                        ? 'bg-cocoa text-milk font-semibold'
-                        : 'text-cocoa hover:bg-cocoa/5'
-                    }`}
-                  >
-                    <span>{link.name}</span>
-                    {isActive && <span className="text-xs bg-honey text-cocoa px-2 py-0.5 rounded-full font-bold">Current</span>}
-                  </Link>
-                );
-              })}
-
-              <div className="mt-4 pt-4 border-t border-cocoa/10 flex flex-col gap-3">
-                <a
-                  href={siteMeta.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-whatsapp w-full justify-center text-base py-3 font-semibold"
-                >
-                  <MessageCircle className="w-5 h-5 fill-white text-white" />
-                  <span>WhatsApp us (+971 54 167 6733)</span>
-                </a>
-
-                <a
-                  href={`tel:${siteMeta.phone}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-cocoa px-5 py-2.5 text-sm font-semibold text-cocoa hover:bg-cocoa hover:text-milk transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  <span>Direct Call: {siteMeta.phone}</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <header id="site-header" data-scrolled={isScrolled ? "true" : "false"} data-hidden="false" data-home={isHome ? "true" : undefined} className="tp-header fixed inset-x-0 top-0 z-50"><div className="tp-header__bar gutter"><Link className="tp-header__brand" aria-label="TeddyPups U.A.E. — home" to="/"><img alt="" width="56" height="56" decoding="async" data-nimg="1" className="tp-header__logo" style={{"color":"transparent"}} src={assetUrl("/brand/logo.png")} /><span className="font-plush tp-header__name">TeddyPups</span></Link><nav aria-label="Main" className="tp-header__nav"><ul><li><Link aria-current="page" data-active="true" className="tp-nav-link" to="/"><span>Home</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-nav-link" to="/puppies"><span>Puppies</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-nav-link" to="/happy-families"><span>Happy families</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-nav-link" to="/how-it-works"><span>How it works</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-nav-link" to="/faq"><span>FAQ</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-nav-link" to="/contact"><span>Visit &amp; contact</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li></ul></nav><div className="tp-header__end"><a href="https://wa.me/971541676733?text=Hi%20TeddyPups!%20I'd%20love%20to%20know%20more%20about%20your%20puppies." target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp tp-header__wa">WhatsApp us</a><button type="button" onClick={() => setIsMenuOpen(true)} className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-cocoa bg-milk px-4 text-[0.95rem] font-semibold lg:hidden" aria-haspopup="dialog"><svg viewBox="0 0 64 64" className="size-4" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg>Menu</button><dialog className="tp-header__menu" open={isMenuOpen}><div className="flex h-full flex-col gutter pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-5"><div className="flex items-center justify-between"><span className="font-scrawl text-lg">where to, friend?</span><button type="button" onClick={() => setIsMenuOpen(false)} className="h-11 rounded-full bg-cocoa px-5 font-semibold text-milk">Close</button></div><nav aria-label="Mobile" className="mt-10 flex-1"><ul className="space-y-1"><li><Link aria-current="page" data-active="true" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/"><span>Home</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/puppies"><span>Puppies</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/happy-families"><span>Happy families</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/how-it-works"><span>How it works</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/faq"><span>FAQ</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li><li><Link data-active="false" className="tp-menu-link font-plush block py-2 text-[clamp(2.4rem,11vw,3.4rem)]" to="/contact"><span>Visit &amp; contact</span><svg viewBox="0 0 64 64" className="tp-nav-link__paw" aria-hidden="true" fill="currentColor"><path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z"></path></svg></Link></li></ul></nav><div className="space-y-3"><a href="https://wa.me/971541676733?text=Hi%20TeddyPups!%20I'd%20love%20to%20know%20more%20about%20your%20puppies." className="btn btn-whatsapp w-full" target="_blank" rel="noopener noreferrer">WhatsApp us</a><p className="text-center text-sm font-medium">+971 54 167 6733</p></div></div></dialog></div></div><svg aria-hidden="true" className="tp-header__hem" width="100%" height="14" preserveAspectRatio="none"><defs><pattern id="tp-hem" width="44" height="14" patternUnits="userSpaceOnUse"><path d="M0 0H44V2A22 11 0 0 1 0 2Z" className="tp-header__hem-fill"></path><path d="M0 2A22 11 0 0 0 44 2" className="tp-header__hem-line"></path></pattern></defs><rect width="100%" height="14" fill="url(#tp-hem)"></rect></svg></header>
   );
 }
-

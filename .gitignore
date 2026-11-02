@@ -25,5 +25,6 @@ dist-ssr
 
 # Scraper archive
 scraper_data/
+screenshots/
 
 .vercel

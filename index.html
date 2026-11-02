@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="Veu4Sq_variable hpvSLW_variable _91XIoq_variable scroll-smooth lenis">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/brand/logo.png" />
+    <link rel="icon" type="image/png" href="/teddypups-uae-clone/brand/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TeddyPups U.A.E. — Premium teacup puppies in Dubai</title>
-    <meta name="description" content="TeddyPups U.A.E. is a Dubai-based brand specializing in miniature puppies, offering premium services and worldwide shipping." />
+    <title>TeddyPups U.A.E. – Premium teacup puppies in Dubai</title>
+    <meta name="description" content="TeddyPups U.A.E. is a Dubai-based brand specialising in miniature puppies, offering premium services and worldwide shipping." />
+    <meta property="og:title" content="TeddyPups U.A.E. – Premium teacup puppies in Dubai" />
+    <meta property="og:description" content="Meet your new best friend in our Downtown Dubai showroom, or order a rare miniature breed from trusted, certified breeders worldwide." />
+    <meta property="og:image" content="/teddypups-uae-clone/brand/logo.png" />
+    <meta name="theme-color" content="#fffdf8" />
 
-    <!-- Google Fonts: Fraunces, Figtree, Shantell Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- Local self-hosted fonts (served from public/fonts/) -->
+    <link rel="preload" href="/teddypups-uae-clone/fonts/54fc36028e2bb174-s.p.20jfceqj9zyw9.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/teddypups-uae-clone/fonts/f7aa21714c1c53f8-s.p.0-95eo-012xnf.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/teddypups-uae-clone/fonts/c25c3c50e24471d2-s.p.1-0ft7iz2f4p6.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/teddypups-uae-clone/fonts/fonts.css" />
+
+    <!-- SPA GitHub Pages Redirect Decoder -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location));
+    </script>
 
     <!-- Schema.org PetStore LD+JSON -->
     <script type="application/ld+json">
@@ -18,9 +37,9 @@
         "@context": "https://schema.org",
         "@type": "PetStore",
         "name": "TeddyPups U.A.E.",
-        "description": "TeddyPups U.A.E. is a Dubai-based brand specializing in miniature puppies, offering premium services and worldwide shipping.",
-        "url": "https://puppy.instabizweb.com",
-        "logo": "/brand/logo.png",
+        "description": "TeddyPups U.A.E. is a Dubai-based brand specialising in miniature puppies, offering premium services and worldwide shipping.",
+        "url": "https://vijay-1807.github.io/teddypups-uae-clone/",
+        "logo": "/teddypups-uae-clone/brand/logo.png",
         "telephone": "+971541676733",
         "address": {
           "@type": "PostalAddress",
@@ -30,9 +49,8 @@
       }
     </script>
   </head>
-  <body class="bg-[#fffdf8] text-[#2a170e] font-sans antialiased selection:bg-[#f2be6b]/40 selection:text-[#2a170e]">
+  <body class="bg-[#fffdf8] text-[#2a170e] antialiased selection:bg-[#f2be6b]/40 selection:text-[#2a170e]">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
