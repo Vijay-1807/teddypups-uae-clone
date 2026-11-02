@@ -21,3 +21,4 @@ if (content !== before) {
   const idx1 = content.indexOf('/media/gAaGwoGej2g6');
   console.log('idx1 snippet:', content.slice(Math.max(0, idx1 - 50), idx1 + 100));
 }
+

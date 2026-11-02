@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SmoothScroll from './components/SmoothScroll';
+import PupJourney from './components/pup/PupJourney';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -19,16 +21,25 @@ function ScrollToTop() {
   useEffect(() => {
     if (hash) {
       const el = document.querySelector(hash);
-      if (el) { el.scrollIntoView({ behavior: 'smooth' }); return; }
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname, hash]);
   return null;
 }
 
+function RoutedPupJourney() {
+  const location = useLocation();
+  return <PupJourney key={location.pathname} />;
+}
+
 export default function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
+      <SmoothScroll />
       <ScrollToTop />
       <Header />
       <Routes>
@@ -42,8 +53,12 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
+      <RoutedPupJourney />
       {/* Mobile Sticky WhatsApp / Call Bar */}
-      <div data-whatsapp-bar="true" className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-cocoa bg-milk px-3 pb-[calc(0.6rem+env(safe-area-inset-bottom))] pt-2.5 md:hidden">
+      <div
+        data-whatsapp-bar="true"
+        className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-cocoa bg-milk px-3 pb-[calc(0.6rem+env(safe-area-inset-bottom))] pt-2.5 md:hidden"
+      >
         <div className="mx-auto flex max-w-md gap-2">
           <a
             href="https://wa.me/971541676733?text=Hi%20TeddyPups!%20I'd%20love%20to%20know%20more%20about%20your%20puppies."

@@ -16,3 +16,4 @@ css = css.replace(
 
 fs.writeFileSync(cssPath, css, 'utf8');
 console.log('Fixed cursor paths in 10jf32vdx50lp.css');
+

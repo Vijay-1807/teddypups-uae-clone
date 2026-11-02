@@ -28,3 +28,5 @@ scraper_data/
 screenshots/
 
 .vercel
+
+chunks/

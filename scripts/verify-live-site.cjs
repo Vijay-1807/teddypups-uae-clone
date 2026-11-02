@@ -54,3 +54,4 @@ const BASE_URL = 'https://vijay-1807.github.io/teddypups-uae-clone';
   await browser.close();
   console.log('\nLive site verification complete!');
 })();
+

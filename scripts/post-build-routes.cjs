@@ -35,3 +35,4 @@ staticRoutes.forEach(r => {
 });
 
 console.log('Successfully generated all static routes for GitHub Pages HTTP 200 responses!');
+

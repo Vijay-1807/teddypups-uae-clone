@@ -10,3 +10,4 @@ const content = fs.readFileSync('src/pages/HomePage.jsx', 'utf8');
     pos += str.length;
   }
 });
+

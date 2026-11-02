@@ -26,3 +26,4 @@ files.forEach(f => {
     console.log(`Updated ${f} with href/poster assetUrl wrapping`);
   }
 });
+
