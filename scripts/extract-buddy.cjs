@@ -17,3 +17,4 @@ console.log('Saved pup_tricks.js');
 const buddyEnd = c.indexOf('e.s(["u",0,', tricksEnd);
 fs.writeFileSync('chunks/extracted/pup_buddy_comp.js', c.slice(tricksEnd, buddyEnd));
 console.log('Saved pup_buddy_comp.js');
+

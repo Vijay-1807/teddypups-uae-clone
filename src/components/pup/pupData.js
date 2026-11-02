@@ -233,3 +233,4 @@ export const PAW_PRINT_PATH =
   makePawOval(24.2, 16.6, 5.5, 7.3, -10) +
   makePawOval(39.8, 16.6, 5.5, 7.3, 10) +
   makePawOval(49.4, 29.2, 5.3, 6.9, 28);
+

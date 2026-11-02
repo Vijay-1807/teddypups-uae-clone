@@ -31,6 +31,55 @@ function ScrollToTop() {
   return null;
 }
 
+// Reveal observer for sketchbook, polaroid, notes, and cards
+function RevealObserver() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const reveal = (el) => {
+      el.dataset.revealed = 'true';
+      observer.unobserve(el);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            reveal(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -4% 0px', threshold: 0.05 }
+    );
+
+    const arm = (el) => {
+      if (el.dataset.revealed === 'true') return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.dataset.revealed = 'true';
+        return;
+      }
+      el.dataset.armed = 'true';
+      observer.observe(el);
+    };
+
+    const scan = () => {
+      document.querySelectorAll('[data-reveal]:not([data-revealed])').forEach(arm);
+    };
+
+    scan();
+    const mo = new MutationObserver(scan);
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mo.disconnect();
+    };
+  }, [pathname]);
+
+  return null;
+}
+
 function RoutedPupJourney() {
   const location = useLocation();
   return <PupJourney key={location.pathname} />;
@@ -41,6 +90,7 @@ export default function App() {
     <Router basename={import.meta.env.BASE_URL}>
       <SmoothScroll />
       <ScrollToTop />
+      <RevealObserver />
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -199,3 +199,4 @@ export default function PupBuddySVG({
     </svg>
   );
 }
+

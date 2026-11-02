@@ -10,3 +10,4 @@ c = c.replace(/if \(Math\.floor\(now \* 2\) !== Math\.floor\(prevTime \* 2\)\) \
 
 fs.writeFileSync('src/components/pup/PupJourney.jsx', c, 'utf8');
 console.log('Fixed log in onFrame');
+

@@ -8,3 +8,4 @@ const code = c.slice(idx, nextIdx !== -1 ? nextIdx : undefined);
 console.log('1063 length:', code.length);
 fs.writeFileSync('chunks/extracted/mod_1063_full.js', code);
 console.log('Saved mod_1063_full.js');
+

@@ -122,3 +122,4 @@ export const TRICK_ROUTINES = {
     [t + 3.1, () => { d.setPose(rest); d.wag(0); say('zzz', 2); }],
   ],
 };
+

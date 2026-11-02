@@ -7,3 +7,4 @@ const end = c.indexOf('tp-fork', idx);
 console.log('Meet component length:', end - start);
 fs.writeFileSync('chunks/extracted/meet_comp.js', c.slice(start, end !== -1 ? end : idx + 3000));
 console.log('Saved meet_comp.js');
+

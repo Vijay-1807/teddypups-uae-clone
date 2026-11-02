@@ -12,3 +12,4 @@ c = c.replace('if (!data) return;', `if (!data) {
 
 fs.writeFileSync('src/components/pup/PupJourney.jsx', c, 'utf8');
 console.log('Added debug logs to initEngine');
+

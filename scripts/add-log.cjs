@@ -11,3 +11,4 @@ const replacement = `const interp = interpolateJourney(journeyData, curScrollY);
 c = c.replace(target, replacement);
 fs.writeFileSync('src/components/pup/PupJourney.jsx', c, 'utf8');
 console.log('Added log to PupJourney.jsx');
+

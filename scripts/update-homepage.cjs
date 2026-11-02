@@ -112,3 +112,4 @@ const insertion = `export default function HomePage({ onPlayVideo, onOpenLightbo
 content = content.replace(target, insertion);
 fs.writeFileSync(path, content, 'utf8');
 console.log('Successfully updated HomePage.jsx with treadmill and chat scroll effects!');
+

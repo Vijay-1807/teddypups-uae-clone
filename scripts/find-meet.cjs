@@ -8,3 +8,4 @@ for (const f of files) {
     console.log(c.slice(Math.max(0, idx - 200), idx + 300));
   }
 }
+

@@ -8,3 +8,4 @@ console.log(animClass);
 
 console.log('--- tricks ---');
 console.log(tricks);
+

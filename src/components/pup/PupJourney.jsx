@@ -669,16 +669,21 @@ export default function PupJourney() {
       rafId = requestAnimationFrame(onFrame);
     };
 
+    let initAttempts = 0;
+    let timer = null;
+
     const initEngine = () => {
-      
       const data = calculateStops();
       if (!data) {
-        
+        if (++initAttempts < 40) {
+          timer = setTimeout(initEngine, 50);
+        }
         return;
       }
       
 
       journeyData = data;
+      window.__pupJourney = data;
       isActive = true;
       docRoot.dataset.pup = data.lane ? 'lane' : 'live';
       layerEl.hidden = false;
@@ -719,7 +724,7 @@ export default function PupJourney() {
     activeCleanup = cleanup;
 
     // Small delay to let page mount and fonts render
-    const timer = setTimeout(initEngine, 80);
+    timer = setTimeout(initEngine, 80);
 
     const onResize = () => {
       const newData = calculateStops();

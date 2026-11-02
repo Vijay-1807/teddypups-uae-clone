@@ -7,3 +7,4 @@ c = c.replace(/if \(!window\.__frameCount\)[\s\S]*?console\.log\('\[onFrame\]'[\
 
 fs.writeFileSync('src/components/pup/PupJourney.jsx', c, 'utf8');
 console.log('Cleaned up debug logs from PupJourney.jsx');
+
